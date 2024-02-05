@@ -14,11 +14,19 @@ public class ScrabbleProjectDriver {
         ScrabbleSet random = new ScrabbleSet();
 
         // Words to calculate Scrabble values for
+        System.out.println("Scrabble Scores - Given Words");
         String[] words = {"Banana", "Video", "Computer", "Phone", "Bottle"};
 
         // Calculate and print Scrabble values for each word
         for (String word : words) {
             int score = english.getWordValue(word);
+            System.out.println("Word: '" + word + "', Scrabble Score: " + score);
+        }
+
+        // test words against a random scrabbleSet object
+        System.out.println("\nScrabble Scores - Random ScrabbleSet:");
+        for (String word : words) {
+            int score = random.getWordValue(word);
             System.out.println("Word: '" + word + "', Scrabble Score: " + score);
         }
 
@@ -68,5 +76,7 @@ public class ScrabbleProjectDriver {
         return word.matches("[a-zA-Z]+") && !word.matches(".*\\d.*");
     }
 
-    
+   
 }
+
+

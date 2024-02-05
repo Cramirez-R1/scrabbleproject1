@@ -19,7 +19,14 @@ public class ScrabbleSet {
         }
     }
 
-      // this is the Second constructor
+    // instantiate a object using a random constructor
+    public static void main(String[] args) {
+        ScrabbleSet random = new ScrabbleSet();
+        System.out.println(random);
+    }
+
+
+     
       public ScrabbleSet() {
         letters = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q",
                 "R", "S", "T", "U", "V", "W", "X", "Y", "Z", " "};
@@ -96,7 +103,30 @@ public class ScrabbleSet {
     
         return letterValues;
     }
-    
+    public int getWordScore(String word) {
+        // Check if the word is acceptable based on letter counts in the ScrabbleSet
+        int[] tempLetterCount = Arrays.copyOf(letterCount, letterCount.length);
+
+        for (char letter : word.toUpperCase().toCharArray()) {
+            if (letter == ' ') {
+                // Handle blank tiles if needed
+                // For now, assume blanks are always valid
+                continue;
+            }
+
+            int index = letter - 'A';
+
+            if (index >= 0 && index < tempLetterCount.length && tempLetterCount[index] > 0) {
+                tempLetterCount[index]--;
+            } else {
+                // Invalid letter in the word or not enough tiles for this letter
+                return 0;
+            }
+        }
+
+        // If we reach here, the word is valid, calculate the score
+        return getWordValue(word);
+    }
     
 
 
@@ -109,4 +139,5 @@ public class ScrabbleSet {
                 "}\n";
     }
     
+
 }
