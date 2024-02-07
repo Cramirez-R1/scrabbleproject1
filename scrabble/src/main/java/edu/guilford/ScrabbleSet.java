@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class ScrabbleSet {
- private String[] letters;
+    private String[] letters;
     private int[] letterCount;
     private int[] letterValues;  // Array to store the point values for each letter
     private Random randomValue;
@@ -19,20 +19,12 @@ public class ScrabbleSet {
         }
     }
 
-    // instantiate a object using a random constructor
-    public static void main(String[] args) {
-        ScrabbleSet random = new ScrabbleSet();
-        System.out.println(random);
-    }
-
-
-     
-      public ScrabbleSet() {
+    public ScrabbleSet() {
         letters = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q",
-                "R", "S", "T", "U", "V", "W", "X", "Y", "Z", " "};
+                   "R", "S", "T", "U", "V", "W", "X", "Y", "Z", " "};
         letterCount = new int[27]; // letters and blank
         randomValue = new Random();
-    
+
         int totalTiles = 100;
         // Assign random counts to each letter
         for (int i = 0; i < letters.length; i++) {
@@ -43,21 +35,19 @@ public class ScrabbleSet {
         }
         // Handle the blank tile separately
         letterCount[26] = totalTiles; // The last element in the array is the blank tile. Placed here so it would not get the initial value of 0.
-    
+
         // Initialize letterValues array with random values
         letterValues = new int[26];
         for (int i = 0; i < letterValues.length; i++) {
             letterValues[i] = randomValue.nextInt(10) + 1; // You can adjust the range of random values as needed
         }
     }
-    
-    
 
     // Add a method to get the point value for a given letter
     public int getWordValue(String word) {
         int total = 0;
         int[] letterValues = createLetterValuesArray(); // Create an array of letter values
-    
+
         for (char letter : word.toUpperCase().toCharArray()) {
             if (letter >= 'A' && letter <= 'Z') {
                 int index = letter - 'A';
@@ -67,9 +57,32 @@ public class ScrabbleSet {
                 return 0;
             }
         }
-    
+
         return total;
     }
+    public int getWordScore(String word) {
+        // Check if the word is acceptable based on letter counts in the ScrabbleSet
+        int[] tempLetterCount = Arrays.copyOf(letterCount, letterCount.length);
+
+        for (char letter : word.toUpperCase().toCharArray()) {
+            if (letter == ' ') {
+                continue;
+            }
+
+            int index = letter - 'A';
+
+            if (index >= 0 && index < tempLetterCount.length && tempLetterCount[index] > 0) {
+                tempLetterCount[index]--;
+            } else {
+                // Invalid letter in the word or not enough tiles for this letter
+                return 0;
+            }
+        }
+
+        // If we reach here, the word is valid, calculate the score
+        return getWordValue(word);
+    }
+
 
     private int[] createLetterValuesArray() {
         int[] letterValues = new int[26];
@@ -100,35 +113,20 @@ public class ScrabbleSet {
         letterValues['X' - 'A'] = 8;
         letterValues['Y' - 'A'] = 4;
         letterValues['Z' - 'A'] = 10;
-    
+
         return letterValues;
     }
-    public int getWordScore(String word) {
-        // Check if the word is acceptable based on letter counts in the ScrabbleSet
-        int[] tempLetterCount = Arrays.copyOf(letterCount, letterCount.length);
 
-        for (char letter : word.toUpperCase().toCharArray()) {
-            if (letter == ' ') {
-                // Handle blank tiles if needed
-                // For now, assume blanks are always valid
-                continue;
-            }
-
-            int index = letter - 'A';
-
-            if (index >= 0 && index < tempLetterCount.length && tempLetterCount[index] > 0) {
-                tempLetterCount[index]--;
-            } else {
-                // Invalid letter in the word or not enough tiles for this letter
-                return 0;
-            }
-        }
-
-        // If we reach here, the word is valid, calculate the score
-        return getWordValue(word);
+    // Generate a random Scrabble set
+    public static ScrabbleSet generateRandomScrabbleSet() {
+        return new ScrabbleSet();
     }
-    
 
+    // Add a method to test words against a Scrabble set
+    public boolean testWord(String word) {
+        int wordScore = getWordValue(word);
+        return wordScore >= 5;
+    }
 
     @Override
     public String toString() {
@@ -138,6 +136,4 @@ public class ScrabbleSet {
                 "Letter Values: " + Arrays.toString(letterValues) + "\n" +
                 "}\n";
     }
-    
-
 }
