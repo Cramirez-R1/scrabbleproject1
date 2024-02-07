@@ -1,0 +1,18 @@
+PS C:\Users\gahel\Downloads\scrabbleproject1>  c:; cd 'c:\Users\gahel\Downloads\scrabbleproject1'; & 'C:\Program Files\Java\jdk-19\bin\java.exe' '-XX:+ShowCodeDetailsInExceptionMessages' '-cp' 'C:\Users\gahel\Downloads\scrabbleproject1\scrabble\target\classes' 'edu.guilford.ScrabbleProjectDriver'   
+Scrabble Scores for Words in the English Set:
+Word: 'Banana', Scrabble Score: 8
+Word: 'Video', Scrabble Score: 9
+Word: 'Computer', Scrabble Score: 14
+Word: 'Phone', Scrabble Score: 10
+Word: 'Bottle', Scrabble Score: 8
+
+Words tested against the random Scrabble set
+Word: 'Banana', Acceptable: false
+Word: 'Video', Acceptable: false
+Word: 'Computer', Acceptable: true
+Word: 'Phone', Acceptable: true
+Word: 'Bottle', Acceptable: false
+
+From the text file 'frankenstein'
+Word with the Highest Scrabble Score: 'exquisitely', Score: 30
+Shortest Non-Valid Word: 'I'
